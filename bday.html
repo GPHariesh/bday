@@ -1,0 +1,416 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Birthday Surprise 🎂</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Trebuchet MS', sans-serif;
+    background: linear-gradient(135deg, #ffe0ec, #ffc2d9, #fff0f5);
+    min-height: 100vh;
+    overflow-x: hidden;
+    text-align: center;
+    color: #8a2853;
+}
+
+.container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 25px;
+}
+
+h1 {
+    font-size: clamp(2rem, 7vw, 3.5rem);
+    margin-bottom: 15px;
+    color: #d63384;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    margin-bottom: 35px;
+}
+
+.gift {
+    width: 150px;
+    height: 130px;
+    position: relative;
+    cursor: pointer;
+    margin: 30px auto;
+    transition: transform 0.4s;
+}
+
+.gift:hover {
+    transform: scale(1.08);
+}
+
+.box {
+    position: absolute;
+    bottom: 0;
+    width: 150px;
+    height: 100px;
+    background: #ff4f91;
+    border-radius: 8px;
+    box-shadow: 0 8px 15px #b84a75;
+}
+
+.box::before {
+    content: "";
+    position: absolute;
+    left: 62px;
+    width: 25px;
+    height: 100%;
+    background: #ffe066;
+}
+
+.lid {
+    position: absolute;
+    top: 15px;
+    left: -8px;
+    width: 166px;
+    height: 30px;
+    background: #e83279;
+    border-radius: 8px;
+    transition: 0.7s;
+    z-index: 2;
+}
+
+.lid::before {
+    content: "";
+    position: absolute;
+    left: 70px;
+    width: 25px;
+    height: 30px;
+    background: #ffe066;
+}
+
+.bow {
+    position: absolute;
+    top: -12px;
+    left: 55px;
+    width: 40px;
+    height: 30px;
+    border: 8px solid #ffe066;
+    border-radius: 50%;
+    z-index: 3;
+}
+
+.gift.open .lid {
+    transform: translateY(-85px) rotate(-20deg);
+}
+
+.message {
+    display: none;
+    max-width: 550px;
+    animation: appear 1s ease;
+}
+
+.message.show {
+    display: block;
+}
+
+.cat {
+    font-size: 100px;
+    animation: bounce 1.5s infinite;
+    margin: 15px;
+}
+
+.message h2 {
+    color: #d63384;
+    font-size: 2rem;
+    margin-bottom: 15px;
+}
+
+.message p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin: 12px 0;
+}
+
+.letter {
+    background: #fff8fc;
+    padding: 25px;
+    border-radius: 20px;
+    margin-top: 25px;
+    box-shadow: 0 5px 20px #e9a5c2;
+    line-height: 1.8;
+}
+
+button {
+    border: none;
+    padding: 13px 25px;
+    margin: 12px;
+    border-radius: 30px;
+    background: #e83279;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #b91d60;
+    transform: scale(1.05);
+}
+
+.heart {
+    position: fixed;
+    bottom: -30px;
+    font-size: 22px;
+    animation: floatUp 6s linear infinite;
+    pointer-events: none;
+    z-index: -1;
+}
+
+@keyframes floatUp {
+    from {
+        transform: translateY(0) rotate(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(-110vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+#confetti {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.footer {
+    margin-top: 30px;
+    font-size: 0.9rem;
+    color: #a34b70;
+}
+
+</style>
+</head>
+
+<body>
+
+<canvas id="confetti"></canvas>
+
+<div class="container">
+
+    <h1>🎀 A Special Surprise 🎀</h1>
+
+    <p class="subtitle">
+        Someone special has a little surprise waiting for you!
+    </p>
+
+    <div class="gift" id="gift" onclick="openGift()">
+        <div class="lid">
+            <div class="bow"></div>
+        </div>
+        <div class="box"></div>
+    </div>
+
+    <p id="instruction">🎁 Tap the gift box to open your surprise!</p>
+
+    <div class="message" id="message">
+
+        <div class="cat">🐱🎂</div>
+
+        <h2>Happy Birthday, <span id="name"></span>! 💗</h2>
+
+        <p>
+            Wishing you a day filled with happiness, laughter,
+            beautiful memories and endless smiles!
+        </p>
+
+        <p>
+            May all your dreams come true and may this year
+            bring you lots of wonderful moments. 🌸
+        </p>
+
+        <div class="letter">
+            <h2>💌 A Little Friendship Note</h2>
+
+            <p>
+                Life becomes more special with good friends.
+                Thank you for all the fun memories, silly moments
+                and unforgettable experiences.
+            </p>
+
+            <p>
+                Keep smiling, keep shining and never stop being
+                the amazing person you are!
+            </p>
+
+            <p>
+                Have the most wonderful birthday! 🎂💕
+            </p>
+
+            <h2>With Best Wishes! 🌷</h2>
+        </div>
+
+        <button onclick="speakWish()">🔊 Listen to Birthday Wish</button>
+
+        <button onclick="celebrate()">🎉 Celebrate Again</button>
+
+        <div class="footer">
+            Made with friendship and happiness 💗
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+// Change the name here
+const birthdayName = "YOUR_NAME";
+
+document.getElementById("name").textContent = birthdayName;
+
+// Open gift box
+function openGift() {
+
+    document.getElementById("gift").classList.add("open");
+
+    document.getElementById("instruction").style.display = "none";
+
+    setTimeout(() => {
+        document.getElementById("message").classList.add("show");
+        celebrate();
+    }, 700);
+
+}
+
+// Voice birthday wish
+function speakWish() {
+
+    const speech = new SpeechSynthesisUtterance(
+        "Happy Birthday " + birthdayName +
+        "! Wishing you lots of happiness, success and beautiful memories. " +
+        "Have a wonderful birthday!"
+    );
+
+    speech.rate = 0.9;
+    speech.pitch = 1.3;
+    speech.volume = 1;
+
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(speech);
+
+}
+
+// Floating hearts
+function createHeart() {
+
+    const heart = document.createElement("div");
+
+    heart.className = "heart";
+
+    const symbols = ["💗", "💕", "💖", "🌸", "🌷"];
+
+    heart.textContent = symbols[
+        Math.floor(Math.random() * symbols.length)
+    ];
+
+    heart.style.left = Math.random() * 100 + "vw";
+
+    heart.style.animationDuration = (4 + Math.random() * 4) + "s";
+
+    document.body.appendChild(heart);
+
+    setTimeout(() => {
+        heart.remove();
+    }, 8000);
+
+}
+
+setInterval(createHeart, 500);
+
+// Confetti animation
+const canvas = document.getElementById("confetti");
+const ctx = canvas.getContext("2d");
+
+let particles = [];
+
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
+
+function celebrate() {
+
+    particles = [];
+
+    for (let i = 0; i < 150; i++) {
+
+        particles.push({
+            x: Math.random() * canvas.width,
+            y: -Math.random() * canvas.height,
+            size: Math.random() * 8 + 3,
+            speed: Math.random() * 4 + 2,
+            color: ["#ff4f91", "#ffe066", "#d63384", "#ffffff"][
+                Math.floor(Math.random() * 4)
+            ]
+        });
+
+    }
+
+    animateConfetti();
+
+}
+
+function animateConfetti() {
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    particles.forEach((p) => {
+
+        ctx.fillStyle = p.color;
+
+        ctx.fillRect(p.x, p.y, p.size, p.size);
+
+        p.y += p.speed;
+
+    });
+
+    particles = particles.filter(p => p.y < canvas.height);
+
+    if (particles.length > 0) {
+        requestAnimationFrame(animateConfetti);
+    }
+
+}
+
+</script>
+
+</body>
+</html>
