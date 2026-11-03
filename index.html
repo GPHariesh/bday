@@ -1,4 +1,4 @@
-
+```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -254,44 +254,6 @@ button:hover {
     }
 }
 
-/* Photo Gallery */
-
-.gallery {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-    margin: 20px auto;
-}
-
-.photo {
-    height: 125px;
-    background: #ffe3ed;
-    border: 3px solid white;
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 4px 12px #d88aaa;
-}
-
-.photo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.upload {
-    display: inline-block;
-    padding: 12px 20px;
-    background: #a84491;
-    color: white;
-    border-radius: 25px;
-    cursor: pointer;
-    margin: 10px;
-}
-
-input[type="file"] {
-    display: none;
-}
-
 /* Confetti */
 
 .confetti {
@@ -322,10 +284,6 @@ input[type="file"] {
 
     .message {
         font-size: 25px;
-    }
-
-    .gallery {
-        grid-template-columns: repeat(2, 1fr);
     }
 }
 
@@ -437,40 +395,6 @@ input[type="file"] {
 
     </div>
 
-    <!-- Photo Gallery -->
-
-    <div id="gallerySection" class="hidden">
-
-        <h2>📸 Our Beautiful Memories</h2>
-
-        <p class="subtitle">
-            Add your favourite friendship pictures!
-        </p>
-
-        <div class="gallery" id="gallery">
-
-            <div class="photo">
-                <img src="https://placehold.co/300x300/ffc3d5/ffffff?text=Memory+1">
-            </div>
-
-            <div class="photo">
-                <img src="https://placehold.co/300x300/e6ccff/ffffff?text=Memory+2">
-            </div>
-
-            <div class="photo">
-                <img src="https://placehold.co/300x300/ffb6c1/ffffff?text=Memory+3">
-            </div>
-
-        </div>
-
-        <label class="upload" for="photos">
-            📷 Add Your Photos
-        </label>
-
-        <input type="file" id="photos" accept="image/*" multiple>
-
-    </div>
-
     <!-- Controls -->
 
     <div id="controls" class="hidden">
@@ -498,7 +422,6 @@ input[type="file"] {
     </p>
 
 </div>
-
 
 <script>
 
@@ -537,8 +460,6 @@ function openGift() {
         document.getElementById("wish").classList.remove("hidden");
 
         document.getElementById("envelope").classList.remove("hidden");
-
-        document.getElementById("gallerySection").classList.remove("hidden");
 
         document.getElementById("controls").classList.remove("hidden");
 
@@ -585,14 +506,21 @@ function speakWish() {
 // ORIGINAL BACKGROUND MELODY
 
 let audioContext;
+
 let musicPlaying = false;
+
 let musicTimer;
+
 let noteIndex = 0;
 
 const melody = [
+
     523.25, 523.25, 587.33, 523.25,
+
     698.46, 659.25, 523.25, 523.25,
+
     587.33, 523.25, 783.99, 698.46
+
 ];
 
 function playNote() {
@@ -627,13 +555,16 @@ function playNote() {
 
 }
 
+
 async function toggleMusic() {
 
     if (!audioContext) {
+
         audioContext = new (
             window.AudioContext ||
             window.webkitAudioContext
         )();
+
     }
 
     await audioContext.resume();
@@ -732,46 +663,6 @@ function openLetter() {
 }
 
 
-// PHOTO UPLOAD
-
-document.getElementById("photos").addEventListener(
-    "change",
-    function(event) {
-
-        let gallery = document.getElementById("gallery");
-
-        let files = event.target.files;
-
-        for (let file of files) {
-
-            if (!file.type.startsWith("image/")) continue;
-
-            let reader = new FileReader();
-
-            reader.onload = function(e) {
-
-                let photo = document.createElement("div");
-
-                photo.className = "photo";
-
-                let img = document.createElement("img");
-
-                img.src = e.target.result;
-
-                photo.appendChild(img);
-
-                gallery.appendChild(photo);
-
-            };
-
-            reader.readAsDataURL(file);
-
-        }
-
-    }
-);
-
-
 // REPLAY
 
 function replay() {
@@ -805,8 +696,6 @@ function replay() {
 
     document.getElementById("letter").classList.remove("show");
 
-    document.getElementById("gallerySection").classList.add("hidden");
-
     document.getElementById("controls").classList.add("hidden");
 
 }
@@ -815,3 +704,4 @@ function replay() {
 
 </body>
 </html>
+```
